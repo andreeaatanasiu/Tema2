@@ -1,0 +1,747 @@
+Terminals unused in grammar
+
+   Terror
+
+
+Grammar
+
+    0 $accept: prog $end
+
+    1 prog: Tprogram prog_name Tvar dec_list Tbegin stmt_list Tend Tpoint
+
+    2 prog_name: Tid
+
+    3 dec_list: dec
+    4         | dec_list Tsemicolon dec
+
+    5 dec: id_list Tcolon type
+
+    6 type: Tinteger
+
+    7 id_list: Tid
+    8        | id_list Tcomma Tid
+
+    9 stmt_list: stmt
+   10          | stmt_list Tsemicolon stmt
+
+   11 stmt: assign
+   12     | read
+   13     | write
+   14     | for
+
+   15 assign: Tid Tassignment exp
+
+   16 exp: term
+   17    | exp Tplus term
+   18    | exp Tminus term
+
+   19 term: factor
+   20     | term Tmultiply factor
+   21     | term Tdivide factor
+
+   22 factor: Tid
+   23       | Tintvalue
+   24       | Tleft exp Tright
+
+   25 read: Tread Tleft id_list Tright
+
+   26 write: Twrite Tleft id_list Tright
+
+   27 for: Tfor index_exp Tdo body
+
+   28 index_exp: Tid Tassignment exp Tto exp
+
+   29 body: stmt
+   30     | Tbegin stmt_list Tend
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+Tprogram (258) 1
+Tvar (259) 1
+Tbegin (260) 1 30
+Tend (261) 1 30
+Tpoint (262) 1
+Tplus (263) 17
+Tminus (264) 18
+Tmultiply (265) 20
+Tdivide (266) 21
+Tleft (267) 24 25 26
+Tright (268) 24 25 26
+Tcolon (269) 5
+Tsemicolon (270) 4 10
+Tassignment (271) 15 28
+Tcomma (272) 8
+Tinteger (273) 6
+Tread (274) 25
+Twrite (275) 26
+Tfor (276) 27
+Tdo (277) 27
+Tto (278) 28
+Terror <sir> (279)
+Tid <sir> (280) 2 7 8 15 22 28
+Tintvalue <val> (281) 23
+
+
+Nonterminals, with rules where they appear
+
+$accept (27)
+    on left: 0
+prog (28)
+    on left: 1, on right: 0
+prog_name (29)
+    on left: 2, on right: 1
+dec_list (30)
+    on left: 3 4, on right: 1 4
+dec (31)
+    on left: 5, on right: 3 4
+type (32)
+    on left: 6, on right: 5
+id_list <sir> (33)
+    on left: 7 8, on right: 5 8 25 26
+stmt_list (34)
+    on left: 9 10, on right: 1 10 30
+stmt (35)
+    on left: 11 12 13 14, on right: 9 10 29
+assign (36)
+    on left: 15, on right: 11
+exp (37)
+    on left: 16 17 18, on right: 15 17 18 24 28
+term (38)
+    on left: 19 20 21, on right: 16 17 18 20 21
+factor (39)
+    on left: 22 23 24, on right: 19 20 21
+read (40)
+    on left: 25, on right: 12
+write (41)
+    on left: 26, on right: 13
+for (42)
+    on left: 27, on right: 14
+index_exp (43)
+    on left: 28, on right: 27
+body (44)
+    on left: 29 30, on right: 27
+
+
+State 0
+
+    0 $accept: . prog $end
+
+    Tprogram  shift, and go to state 1
+
+    prog  go to state 2
+
+
+State 1
+
+    1 prog: Tprogram . prog_name Tvar dec_list Tbegin stmt_list Tend Tpoint
+
+    Tid  shift, and go to state 3
+
+    prog_name  go to state 4
+
+
+State 2
+
+    0 $accept: prog . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    2 prog_name: Tid .
+
+    $default  reduce using rule 2 (prog_name)
+
+
+State 4
+
+    1 prog: Tprogram prog_name . Tvar dec_list Tbegin stmt_list Tend Tpoint
+
+    Tvar  shift, and go to state 6
+
+
+State 5
+
+    0 $accept: prog $end .
+
+    $default  accept
+
+
+State 6
+
+    1 prog: Tprogram prog_name Tvar . dec_list Tbegin stmt_list Tend Tpoint
+
+    Tid  shift, and go to state 7
+
+    dec_list  go to state 8
+    dec       go to state 9
+    id_list   go to state 10
+
+
+State 7
+
+    7 id_list: Tid .
+
+    $default  reduce using rule 7 (id_list)
+
+
+State 8
+
+    1 prog: Tprogram prog_name Tvar dec_list . Tbegin stmt_list Tend Tpoint
+    4 dec_list: dec_list . Tsemicolon dec
+
+    Tbegin      shift, and go to state 11
+    Tsemicolon  shift, and go to state 12
+
+
+State 9
+
+    3 dec_list: dec .
+
+    $default  reduce using rule 3 (dec_list)
+
+
+State 10
+
+    5 dec: id_list . Tcolon type
+    8 id_list: id_list . Tcomma Tid
+
+    Tcolon  shift, and go to state 13
+    Tcomma  shift, and go to state 14
+
+
+State 11
+
+    1 prog: Tprogram prog_name Tvar dec_list Tbegin . stmt_list Tend Tpoint
+
+    Tread   shift, and go to state 15
+    Twrite  shift, and go to state 16
+    Tfor    shift, and go to state 17
+    Tid     shift, and go to state 18
+
+    stmt_list  go to state 19
+    stmt       go to state 20
+    assign     go to state 21
+    read       go to state 22
+    write      go to state 23
+    for        go to state 24
+
+
+State 12
+
+    4 dec_list: dec_list Tsemicolon . dec
+
+    Tid  shift, and go to state 7
+
+    dec      go to state 25
+    id_list  go to state 10
+
+
+State 13
+
+    5 dec: id_list Tcolon . type
+
+    Tinteger  shift, and go to state 26
+
+    type  go to state 27
+
+
+State 14
+
+    8 id_list: id_list Tcomma . Tid
+
+    Tid  shift, and go to state 28
+
+
+State 15
+
+   25 read: Tread . Tleft id_list Tright
+
+    Tleft  shift, and go to state 29
+
+
+State 16
+
+   26 write: Twrite . Tleft id_list Tright
+
+    Tleft  shift, and go to state 30
+
+
+State 17
+
+   27 for: Tfor . index_exp Tdo body
+
+    Tid  shift, and go to state 31
+
+    index_exp  go to state 32
+
+
+State 18
+
+   15 assign: Tid . Tassignment exp
+
+    Tassignment  shift, and go to state 33
+
+
+State 19
+
+    1 prog: Tprogram prog_name Tvar dec_list Tbegin stmt_list . Tend Tpoint
+   10 stmt_list: stmt_list . Tsemicolon stmt
+
+    Tend        shift, and go to state 34
+    Tsemicolon  shift, and go to state 35
+
+
+State 20
+
+    9 stmt_list: stmt .
+
+    $default  reduce using rule 9 (stmt_list)
+
+
+State 21
+
+   11 stmt: assign .
+
+    $default  reduce using rule 11 (stmt)
+
+
+State 22
+
+   12 stmt: read .
+
+    $default  reduce using rule 12 (stmt)
+
+
+State 23
+
+   13 stmt: write .
+
+    $default  reduce using rule 13 (stmt)
+
+
+State 24
+
+   14 stmt: for .
+
+    $default  reduce using rule 14 (stmt)
+
+
+State 25
+
+    4 dec_list: dec_list Tsemicolon dec .
+
+    $default  reduce using rule 4 (dec_list)
+
+
+State 26
+
+    6 type: Tinteger .
+
+    $default  reduce using rule 6 (type)
+
+
+State 27
+
+    5 dec: id_list Tcolon type .
+
+    $default  reduce using rule 5 (dec)
+
+
+State 28
+
+    8 id_list: id_list Tcomma Tid .
+
+    $default  reduce using rule 8 (id_list)
+
+
+State 29
+
+   25 read: Tread Tleft . id_list Tright
+
+    Tid  shift, and go to state 7
+
+    id_list  go to state 36
+
+
+State 30
+
+   26 write: Twrite Tleft . id_list Tright
+
+    Tid  shift, and go to state 7
+
+    id_list  go to state 37
+
+
+State 31
+
+   28 index_exp: Tid . Tassignment exp Tto exp
+
+    Tassignment  shift, and go to state 38
+
+
+State 32
+
+   27 for: Tfor index_exp . Tdo body
+
+    Tdo  shift, and go to state 39
+
+
+State 33
+
+   15 assign: Tid Tassignment . exp
+
+    Tleft      shift, and go to state 40
+    Tid        shift, and go to state 41
+    Tintvalue  shift, and go to state 42
+
+    exp     go to state 43
+    term    go to state 44
+    factor  go to state 45
+
+
+State 34
+
+    1 prog: Tprogram prog_name Tvar dec_list Tbegin stmt_list Tend . Tpoint
+
+    Tpoint  shift, and go to state 46
+
+
+State 35
+
+   10 stmt_list: stmt_list Tsemicolon . stmt
+
+    Tread   shift, and go to state 15
+    Twrite  shift, and go to state 16
+    Tfor    shift, and go to state 17
+    Tid     shift, and go to state 18
+
+    stmt    go to state 47
+    assign  go to state 21
+    read    go to state 22
+    write   go to state 23
+    for     go to state 24
+
+
+State 36
+
+    8 id_list: id_list . Tcomma Tid
+   25 read: Tread Tleft id_list . Tright
+
+    Tright  shift, and go to state 48
+    Tcomma  shift, and go to state 14
+
+
+State 37
+
+    8 id_list: id_list . Tcomma Tid
+   26 write: Twrite Tleft id_list . Tright
+
+    Tright  shift, and go to state 49
+    Tcomma  shift, and go to state 14
+
+
+State 38
+
+   28 index_exp: Tid Tassignment . exp Tto exp
+
+    Tleft      shift, and go to state 40
+    Tid        shift, and go to state 41
+    Tintvalue  shift, and go to state 42
+
+    exp     go to state 50
+    term    go to state 44
+    factor  go to state 45
+
+
+State 39
+
+   27 for: Tfor index_exp Tdo . body
+
+    Tbegin  shift, and go to state 51
+    Tread   shift, and go to state 15
+    Twrite  shift, and go to state 16
+    Tfor    shift, and go to state 17
+    Tid     shift, and go to state 18
+
+    stmt    go to state 52
+    assign  go to state 21
+    read    go to state 22
+    write   go to state 23
+    for     go to state 24
+    body    go to state 53
+
+
+State 40
+
+   24 factor: Tleft . exp Tright
+
+    Tleft      shift, and go to state 40
+    Tid        shift, and go to state 41
+    Tintvalue  shift, and go to state 42
+
+    exp     go to state 54
+    term    go to state 44
+    factor  go to state 45
+
+
+State 41
+
+   22 factor: Tid .
+
+    $default  reduce using rule 22 (factor)
+
+
+State 42
+
+   23 factor: Tintvalue .
+
+    $default  reduce using rule 23 (factor)
+
+
+State 43
+
+   15 assign: Tid Tassignment exp .
+   17 exp: exp . Tplus term
+   18    | exp . Tminus term
+
+    Tplus   shift, and go to state 55
+    Tminus  shift, and go to state 56
+
+    $default  reduce using rule 15 (assign)
+
+
+State 44
+
+   16 exp: term .
+   20 term: term . Tmultiply factor
+   21     | term . Tdivide factor
+
+    Tmultiply  shift, and go to state 57
+    Tdivide    shift, and go to state 58
+
+    $default  reduce using rule 16 (exp)
+
+
+State 45
+
+   19 term: factor .
+
+    $default  reduce using rule 19 (term)
+
+
+State 46
+
+    1 prog: Tprogram prog_name Tvar dec_list Tbegin stmt_list Tend Tpoint .
+
+    $default  reduce using rule 1 (prog)
+
+
+State 47
+
+   10 stmt_list: stmt_list Tsemicolon stmt .
+
+    $default  reduce using rule 10 (stmt_list)
+
+
+State 48
+
+   25 read: Tread Tleft id_list Tright .
+
+    $default  reduce using rule 25 (read)
+
+
+State 49
+
+   26 write: Twrite Tleft id_list Tright .
+
+    $default  reduce using rule 26 (write)
+
+
+State 50
+
+   17 exp: exp . Tplus term
+   18    | exp . Tminus term
+   28 index_exp: Tid Tassignment exp . Tto exp
+
+    Tplus   shift, and go to state 55
+    Tminus  shift, and go to state 56
+    Tto     shift, and go to state 59
+
+
+State 51
+
+   30 body: Tbegin . stmt_list Tend
+
+    Tread   shift, and go to state 15
+    Twrite  shift, and go to state 16
+    Tfor    shift, and go to state 17
+    Tid     shift, and go to state 18
+
+    stmt_list  go to state 60
+    stmt       go to state 20
+    assign     go to state 21
+    read       go to state 22
+    write      go to state 23
+    for        go to state 24
+
+
+State 52
+
+   29 body: stmt .
+
+    $default  reduce using rule 29 (body)
+
+
+State 53
+
+   27 for: Tfor index_exp Tdo body .
+
+    $default  reduce using rule 27 (for)
+
+
+State 54
+
+   17 exp: exp . Tplus term
+   18    | exp . Tminus term
+   24 factor: Tleft exp . Tright
+
+    Tplus   shift, and go to state 55
+    Tminus  shift, and go to state 56
+    Tright  shift, and go to state 61
+
+
+State 55
+
+   17 exp: exp Tplus . term
+
+    Tleft      shift, and go to state 40
+    Tid        shift, and go to state 41
+    Tintvalue  shift, and go to state 42
+
+    term    go to state 62
+    factor  go to state 45
+
+
+State 56
+
+   18 exp: exp Tminus . term
+
+    Tleft      shift, and go to state 40
+    Tid        shift, and go to state 41
+    Tintvalue  shift, and go to state 42
+
+    term    go to state 63
+    factor  go to state 45
+
+
+State 57
+
+   20 term: term Tmultiply . factor
+
+    Tleft      shift, and go to state 40
+    Tid        shift, and go to state 41
+    Tintvalue  shift, and go to state 42
+
+    factor  go to state 64
+
+
+State 58
+
+   21 term: term Tdivide . factor
+
+    Tleft      shift, and go to state 40
+    Tid        shift, and go to state 41
+    Tintvalue  shift, and go to state 42
+
+    factor  go to state 65
+
+
+State 59
+
+   28 index_exp: Tid Tassignment exp Tto . exp
+
+    Tleft      shift, and go to state 40
+    Tid        shift, and go to state 41
+    Tintvalue  shift, and go to state 42
+
+    exp     go to state 66
+    term    go to state 44
+    factor  go to state 45
+
+
+State 60
+
+   10 stmt_list: stmt_list . Tsemicolon stmt
+   30 body: Tbegin stmt_list . Tend
+
+    Tend        shift, and go to state 67
+    Tsemicolon  shift, and go to state 35
+
+
+State 61
+
+   24 factor: Tleft exp Tright .
+
+    $default  reduce using rule 24 (factor)
+
+
+State 62
+
+   17 exp: exp Tplus term .
+   20 term: term . Tmultiply factor
+   21     | term . Tdivide factor
+
+    Tmultiply  shift, and go to state 57
+    Tdivide    shift, and go to state 58
+
+    $default  reduce using rule 17 (exp)
+
+
+State 63
+
+   18 exp: exp Tminus term .
+   20 term: term . Tmultiply factor
+   21     | term . Tdivide factor
+
+    Tmultiply  shift, and go to state 57
+    Tdivide    shift, and go to state 58
+
+    $default  reduce using rule 18 (exp)
+
+
+State 64
+
+   20 term: term Tmultiply factor .
+
+    $default  reduce using rule 20 (term)
+
+
+State 65
+
+   21 term: term Tdivide factor .
+
+    $default  reduce using rule 21 (term)
+
+
+State 66
+
+   17 exp: exp . Tplus term
+   18    | exp . Tminus term
+   28 index_exp: Tid Tassignment exp Tto exp .
+
+    Tplus   shift, and go to state 55
+    Tminus  shift, and go to state 56
+
+    $default  reduce using rule 28 (index_exp)
+
+
+State 67
+
+   30 body: Tbegin stmt_list Tend .
+
+    $default  reduce using rule 30 (body)
